@@ -1,4 +1,9 @@
 package io.github.shuoros.javagram;
 
-public class Javagram {
+import io.github.shuoros.javagram.method.Method;
+
+public interface Javagram {
+
+    String sendRequest(Method method);
+
 }
