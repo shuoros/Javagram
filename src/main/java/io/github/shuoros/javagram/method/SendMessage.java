@@ -1,8 +1,12 @@
 package io.github.shuoros.javagram.method;
 
+import io.github.shuoros.javagram.type.MessageEntity;
+import io.github.shuoros.javagram.type.ReplyMarkup;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,7 +17,7 @@ public class SendMessage implements Method {
     private int chatId;
     private String text;
     private String parseMode;
-    private MessageEntity entities;
+    private List<MessageEntity> entities;
     private boolean disableWebPagePreview;
     private boolean disableNotification;
     private int replyToMessageId;
