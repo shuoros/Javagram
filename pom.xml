@@ -77,6 +77,21 @@
             <version>1.18.22</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20201115</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.shuoros</groupId>
+            <artifactId>JTerminal</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
 
     <build>
