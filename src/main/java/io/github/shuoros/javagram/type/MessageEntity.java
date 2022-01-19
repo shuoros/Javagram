@@ -16,4 +16,10 @@ public class MessageEntity {
     private User user;
     private String language;
 
+    public MessageEntity(String type, int offset, int length) {
+        this.type = type;
+        this.offset = offset;
+        this.length = length;
+    }
+
 }
