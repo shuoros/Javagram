@@ -1,5 +1,6 @@
 package io.github.shuoros.javagram.method;
 
+import io.github.shuoros.javagram.type.Message;
 import io.github.shuoros.javagram.type.MessageEntity;
 import io.github.shuoros.javagram.type.ReplyMarkup;
 import io.github.shuoros.javagram.type.Type;
