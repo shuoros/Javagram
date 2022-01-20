@@ -1,5 +1,6 @@
 package io.github.shuoros.javagram.type;
 
+import io.github.shuoros.javagram.game.Game;
 import io.github.shuoros.javagram.sticker.Sticker;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +44,8 @@ public class Message implements Type {
     private List<MessageEntity> captionEntities;
     private Contact contact;
     private Dice dice;
-    private Game game;
+    private \
+    Game game;
     private Poll poll;
     private Venue venue;
     private Location location;
