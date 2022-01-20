@@ -1,6 +1,7 @@
 package io.github.shuoros.javagram.type;
 
 import io.github.shuoros.javagram.game.Game;
+import io.github.shuoros.javagram.passport.PassportData;
 import io.github.shuoros.javagram.payment.Invoice;
 import io.github.shuoros.javagram.payment.SuccessfulPayment;
 import io.github.shuoros.javagram.sticker.Sticker;
