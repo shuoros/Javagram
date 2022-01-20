@@ -44,8 +44,7 @@ public class Message implements Type {
     private List<MessageEntity> captionEntities;
     private Contact contact;
     private Dice dice;
-    private \
-    Game game;
+    private Game game;
     private Poll poll;
     private Venue venue;
     private Location location;
