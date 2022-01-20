@@ -1,9 +1,12 @@
 package io.github.shuoros.javagram.type;
 
+import io.github.shuoros.javagram.sticker.Sticker;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
