@@ -38,7 +38,7 @@ public class Message implements Type {
     private List<PhotoSize> photo;
     private Sticker sticker;
     private Video video;
-    private Voice voive;
+    private Voice voice;
     private String caption;
     private List<MessageEntity> captionEntities;
     private Contact contact;
