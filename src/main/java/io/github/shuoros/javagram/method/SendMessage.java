@@ -1,7 +1,9 @@
 package io.github.shuoros.javagram.method;
 
+import io.github.shuoros.javagram.type.Message;
 import io.github.shuoros.javagram.type.MessageEntity;
 import io.github.shuoros.javagram.type.ReplyMarkup;
+import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,8 +26,14 @@ public class SendMessage implements Method {
     private boolean allowSendingWithoutReply;
     private ReplyMarkup replyMarkup;
 
+    @Override
     public String getMethod() {
         return this.REQUEST;
+    }
+
+    @Override
+    public Type getReturnType() {
+        return new Message();
     }
 
     public SendMessage(int chatId, String text) {

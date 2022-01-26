@@ -1,6 +1,8 @@
 package io.github.shuoros.javagram;
 
+import com.google.gson.Gson;
 import io.github.shuoros.javagram.method.Method;
+import io.github.shuoros.javagram.type.Type;
 import io.github.shuoros.jterminal.JTerminal;
 import io.github.shuoros.jterminal.ansi.Color;
 import org.json.JSONArray;
@@ -11,12 +13,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class TelegramBot implements Javagram {
 
     private final String TELEGRAM = "https://api.telegram.org/bot";
-    private String token;
-    private boolean debug;
+    private final String token;
+    private final boolean debug;
 
     public TelegramBot(String token) {
         this(token, false);
@@ -28,9 +31,8 @@ public class TelegramBot implements Javagram {
     }
 
     @Override
-    public String sendRequest(Method method) {
-        JSONObject json = new JSONObject(method);
-        json = telegramizeParameters(json);
+    public Type sendRequest(Method method) {
+        JSONObject json = Utils.serializeRequest(method);
         if (debug) {
             JTerminal.println("You send:", Color.AQUA);
             JTerminal.println(json.toString(), Color.AQUA);
@@ -44,9 +46,10 @@ public class TelegramBot implements Javagram {
             con.setRequestProperty("Accept", "application/json");
             con.setDoOutput(true);
             OutputStream os = con.getOutputStream();
-            byte[] input = json.toString().getBytes("utf-8");
+            byte[] input = json.toString().getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "utf-8"));
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    con.getResponseCode() / 100 == 2 ? con.getInputStream() : con.getErrorStream(), StandardCharsets.UTF_8));
             String responseLine = null;
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
@@ -58,47 +61,101 @@ public class TelegramBot implements Javagram {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return response.toString();
+        return Utils.deserializeResponse(new JSONObject(response.toString()), method.getReturnType());
     }
 
-    private static JSONObject telegramizeParameters(JSONObject input) {
-        JSONObject output = new JSONObject();
-        input.keySet().forEach(key -> {
-            if (input.get(key).getClass().equals(JSONObject.class)) {
-                output.put(camelCaseToSnakeCase(key), telegramizeParameters(input.getJSONObject(key)));
-            } else if (input.get(key).getClass().equals(JSONArray.class)) {
-                output.put(camelCaseToSnakeCase(key), telegramizeArrayParameters(input.getJSONArray(key)));
-            } else {
-                output.put(camelCaseToSnakeCase(key), input.get(key));
-            }
-        });
-        return output;
-    }
+    private static class Utils {
 
-    private static JSONArray telegramizeArrayParameters(JSONArray input) {
-        JSONArray output = new JSONArray();
-        for (int i = 0; i < input.length(); i++) {
-            if (input.get(i).getClass().equals(JSONObject.class)) {
-                output.put(telegramizeParameters(input.getJSONObject(i)));
-            } else if (input.get(i).getClass().equals(JSONArray.class)) {
-                output.put(telegramizeArrayParameters(input.getJSONArray(i)));
-            } else if (input.get(i).getClass().equals(String.class)) {
-                output.put(camelCaseToSnakeCase(input.getString(i)));
-            }
+        private static JSONObject serializeRequest(Method method) {
+            JSONObject json = new JSONObject(method);
+            json.remove("method");
+            return Utils.telegramizeParameters(json);
         }
-        return output;
-    }
 
-    private static String camelCaseToSnakeCase(String input) {
-        StringBuilder output = new StringBuilder();
-        for (char c : input.toCharArray()) {
-            if (Character.isLowerCase(c)) {
-                output.append(c);
-            } else {
-                output.append("_" + Character.toLowerCase(c));
-            }
+        private static Type deserializeResponse(JSONObject json, Type type) {
+            return new Gson().fromJson(Utils.javaizeParameters(json.getJSONObject("result")).toString(), type.getClass());
         }
-        return output.toString();
+
+        private static JSONObject telegramizeParameters(JSONObject input) {
+            JSONObject output = new JSONObject();
+            input.keySet().forEach(key -> {
+                if (input.get(key).getClass().equals(JSONObject.class)) {
+                    output.put(camelCaseToSnakeCase(key), telegramizeParameters(input.getJSONObject(key)));
+                } else if (input.get(key).getClass().equals(JSONArray.class)) {
+                    output.put(camelCaseToSnakeCase(key), telegramizeArrayParameters(input.getJSONArray(key)));
+                } else {
+                    output.put(camelCaseToSnakeCase(key), input.get(key));
+                }
+            });
+            return output;
+        }
+
+        private static JSONArray telegramizeArrayParameters(JSONArray input) {
+            JSONArray output = new JSONArray();
+            for (int i = 0; i < input.length(); i++) {
+                if (input.get(i).getClass().equals(JSONObject.class)) {
+                    output.put(telegramizeParameters(input.getJSONObject(i)));
+                } else if (input.get(i).getClass().equals(JSONArray.class)) {
+                    output.put(telegramizeArrayParameters(input.getJSONArray(i)));
+                } else if (input.get(i).getClass().equals(String.class)) {
+                    output.put(camelCaseToSnakeCase(input.getString(i)));
+                }
+            }
+            return output;
+        }
+
+        private static JSONObject javaizeParameters(JSONObject input) {
+            JSONObject output = new JSONObject();
+            input.keySet().forEach(key -> {
+                if (input.get(key).getClass().equals(JSONObject.class)) {
+                    output.put(snakeCaseToCamelCase(key), javaizeParameters(input.getJSONObject(key)));
+                } else if (input.get(key).getClass().equals(JSONArray.class)) {
+                    output.put(snakeCaseToCamelCase(key), javaizeArrayParameters(input.getJSONArray(key)));
+                } else {
+                    output.put(snakeCaseToCamelCase(key), input.get(key));
+                }
+            });
+            return output;
+        }
+
+        private static JSONArray javaizeArrayParameters(JSONArray input) {
+            JSONArray output = new JSONArray();
+            for (int i = 0; i < input.length(); i++) {
+                if (input.get(i).getClass().equals(JSONObject.class)) {
+                    output.put(javaizeParameters(input.getJSONObject(i)));
+                } else if (input.get(i).getClass().equals(JSONArray.class)) {
+                    output.put(javaizeArrayParameters(input.getJSONArray(i)));
+                } else if (input.get(i).getClass().equals(String.class)) {
+                    output.put(snakeCaseToCamelCase(input.getString(i)));
+                }
+            }
+            return output;
+        }
+
+        private static String camelCaseToSnakeCase(String input) {
+            StringBuilder output = new StringBuilder();
+            for (char c : input.toCharArray()) {
+                if (Character.isLowerCase(c)) {
+                    output.append(c);
+                } else {
+                    output.append("_" + Character.toLowerCase(c));
+                }
+            }
+            return output.toString();
+        }
+
+        private static String snakeCaseToCamelCase(String input) {
+            StringBuilder output = new StringBuilder();
+            for (int i = 0; i < input.length(); i++) {
+                if (input.charAt(i) == '_') {
+                    output.append(Character.toUpperCase(input.charAt(i + 1)));
+                    i++;
+                } else {
+                    output.append(input.charAt(i));
+                }
+            }
+            return output.toString();
+        }
     }
 
 }
