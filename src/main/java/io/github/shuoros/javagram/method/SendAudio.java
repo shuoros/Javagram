@@ -1,5 +1,6 @@
 package io.github.shuoros.javagram.method;
 
+import io.github.shuoros.javagram.type.Message;
 import io.github.shuoros.javagram.type.MessageEntity;
 import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class SendAudio implements Method {
 
     @Override
     public Type getReturnType() {
-        return null;
+        return new Message();
     }
 
     public SendAudio(int chatId, String audio) {
