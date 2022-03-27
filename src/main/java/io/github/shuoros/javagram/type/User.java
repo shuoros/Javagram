@@ -2,12 +2,14 @@ package io.github.shuoros.javagram.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class User {
+@NoArgsConstructor
+public class User implements Type {
 
     private int id;
     private boolean isBot;
