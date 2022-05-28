@@ -11,4 +11,8 @@ public class Bool implements Type {
 
     private boolean value;
 
+    public Bool(boolean value) {
+        this.value = value;
+    }
+
 }

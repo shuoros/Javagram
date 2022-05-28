@@ -11,4 +11,8 @@ public class Int implements Type {
 
     private int value;
 
+    public Int(int value) {
+        this.value = value;
+    }
+
 }
