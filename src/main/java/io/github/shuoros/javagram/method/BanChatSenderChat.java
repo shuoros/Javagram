@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BanChatSenderChat implements Method {
 
-    private final String REQUEST = "/setChatAdministratorCustomTitle";
+    private final String REQUEST = "/banChatSenderChat";
     private String chatId;
     private int senderChatId;
 

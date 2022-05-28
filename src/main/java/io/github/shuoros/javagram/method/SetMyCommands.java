@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SetMyCommands implements Method {
 
-    private final String REQUEST = "/sendMessage";
+    private final String REQUEST = "/setMyCommands";
     private List<BotCommand> commands;
     private BotCommandScope scope;
     private String languageCode;

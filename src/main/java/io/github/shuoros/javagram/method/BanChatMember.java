@@ -13,7 +13,7 @@ public class BanChatMember implements Method {
 
     private final String REQUEST = "/banChatMember";
     private String chatId;
-    private String userId;
+    private int userId;
     private int untilDate;
     private boolean revokeMessages;
 
@@ -27,11 +27,11 @@ public class BanChatMember implements Method {
         return new Boolean();
     }
 
-    public BanChatMember(int chatId, String userId) {
+    public BanChatMember(int chatId, int userId) {
         this(String.valueOf(chatId), userId);
     }
 
-    public BanChatMember(String chatId, String userId) {
+    public BanChatMember(String chatId, int userId) {
         this.chatId = chatId;
         this.userId = userId;
     }

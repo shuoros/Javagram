@@ -77,6 +77,8 @@ public class TelegramBot implements Javagram {
                 return io.github.shuoros.javagram.type.Boolean.builder().value(json.getBoolean("result")).build();
             else if (json.get("result") instanceof Integer)
                 return io.github.shuoros.javagram.type.Integer.builder().value(json.getInt("result")).build();
+            else if (json.get("result") instanceof JSONArray)
+                return new Gson().fromJson(Utils.javaizeParameters(json.getJSONArray("result")).toString(), type.getClass());
             else
                 return new Gson().fromJson(Utils.javaizeParameters(json.getJSONObject("result")).toString(), type.getClass());
         }
@@ -106,6 +108,14 @@ public class TelegramBot implements Javagram {
                     output.put(camelCaseToSnakeCase(input.getString(i)));
                 }
             }
+            return output;
+        }
+
+        private static JSONArray javaizeParameters(JSONArray input) {
+            JSONArray output = new JSONArray();
+            input.forEach(element -> {
+                output.put(javaizeParameters((JSONObject) element));
+            });
             return output;
         }
 

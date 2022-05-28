@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DeleteChatStickerSet implements Method {
 
-    private final String REQUEST = "/sendMessage";
+    private final String REQUEST = "/deleteChatStickerSet";
     private String chatId;
 
     @Override

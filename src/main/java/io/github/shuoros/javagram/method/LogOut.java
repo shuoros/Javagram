@@ -10,6 +10,7 @@ public class LogOut implements Method {
     public String getMethod() {
         return this.REQUEST;
     }
+
     @Override
     public Type getReturnType() {
         return null;

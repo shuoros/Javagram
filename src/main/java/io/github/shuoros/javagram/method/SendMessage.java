@@ -16,7 +16,7 @@ import java.util.List;
 public class SendMessage implements Method {
 
     private final String REQUEST = "/sendMessage";
-    private int chatId;
+    private String chatId;
     private String text;
     private String parseMode;
     private List<MessageEntity> entities;
@@ -37,6 +37,10 @@ public class SendMessage implements Method {
     }
 
     public SendMessage(int chatId, String text) {
+        this(String.valueOf(chatId), text);
+    }
+
+    public SendMessage(String chatId, String text) {
         this.chatId = chatId;
         this.text = text;
     }

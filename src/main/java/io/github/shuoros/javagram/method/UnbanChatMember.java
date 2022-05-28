@@ -13,7 +13,7 @@ public class UnbanChatMember implements Method {
 
     private final String REQUEST = "/unbanChatMember";
     private String chatId;
-    private String userId;
+    private int userId;
     private boolean onlyIfBanned;
 
     @Override
@@ -26,11 +26,11 @@ public class UnbanChatMember implements Method {
         return new Boolean();
     }
 
-    public UnbanChatMember(int chatId, String userId) {
+    public UnbanChatMember(int chatId, int userId) {
         this(String.valueOf(chatId), userId);
     }
 
-    public UnbanChatMember(String chatId, String userId) {
+    public UnbanChatMember(String chatId, int userId) {
         this.chatId = chatId;
         this.userId = userId;
     }

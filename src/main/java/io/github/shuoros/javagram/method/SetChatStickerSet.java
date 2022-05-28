@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SetChatStickerSet implements Method {
 
-    private final String REQUEST = "/sendMessage";
+    private final String REQUEST = "/setChatStickerSet";
     private String chatId;
     private String stickerSetName;
 
