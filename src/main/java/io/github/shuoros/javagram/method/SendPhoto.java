@@ -13,15 +13,16 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SendMessage implements Method {
+public class SendPhoto implements Method {
 
-    private final String REQUEST = "/sendMessage";
-    private String chatId;
-    private String text;
+    private final String REQUEST = "/sendPhoto";
+    private int chatId;
+    private String photo;
+    private String caption;
     private String parseMode;
-    private List<MessageEntity> entities;
-    private boolean disableWebPagePreview;
+    private List<MessageEntity> captionEntities;
     private boolean disableNotification;
+    private boolean protectContent;
     private int replyToMessageId;
     private boolean allowSendingWithoutReply;
     private ReplyMarkup replyMarkup;
@@ -36,13 +37,9 @@ public class SendMessage implements Method {
         return new Message();
     }
 
-    public SendMessage(int chatId, String text) {
-        this(String.valueOf(chatId), text);
-    }
-
-    public SendMessage(String chatId, String text) {
+    public SendPhoto(int chatId, String photo) {
         this.chatId = chatId;
-        this.text = text;
+        this.photo = photo;
     }
 
 }

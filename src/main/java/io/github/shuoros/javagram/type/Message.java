@@ -5,10 +5,7 @@ import io.github.shuoros.javagram.passport.PassportData;
 import io.github.shuoros.javagram.payment.Invoice;
 import io.github.shuoros.javagram.payment.SuccessfulPayment;
 import io.github.shuoros.javagram.sticker.Sticker;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -16,9 +13,10 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Message implements Type {
 
-    private int messageId;
+    private String messageId;
     private User from;
     private Chat senderChat;
     private int date;
@@ -75,10 +73,15 @@ public class Message implements Type {
     private InlineKeyboardMarkup replyMarkup;
 
     public Message(int messageId, User from, Chat senderChat, int date, Chat chat) {
+        this(String.valueOf(messageId), from, senderChat, date, chat);
+    }
+
+    public Message(String messageId, User from, Chat senderChat, int date, Chat chat) {
         this.messageId = messageId;
         this.from = from;
         this.senderChat = senderChat;
         this.date = date;
         this.chat = chat;
     }
+
 }

@@ -34,8 +34,8 @@ public class TelegramBot implements Javagram {
     public Type sendRequest(Method method) {
         JSONObject json = Utils.serializeRequest(method);
         if (debug) {
-            JTerminal.println("You send:", Color.AQUA);
-            JTerminal.println(json.toString(), Color.AQUA);
+            JTerminal.print("Request: ", Color.AQUA);
+            JTerminal.println(json.toString(), Color.YELLOW);
         }
         StringBuilder response = new StringBuilder();
         try {
@@ -55,8 +55,8 @@ public class TelegramBot implements Javagram {
                 response.append(responseLine.trim());
             }
             if (debug) {
-                JTerminal.println("You get:", Color.AQUA);
-                JTerminal.println(response.toString(), Color.AQUA);
+                JTerminal.print("Response: ", Color.AQUA);
+                JTerminal.println(response.toString(), Color.YELLOW);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,12 +68,19 @@ public class TelegramBot implements Javagram {
 
         private static JSONObject serializeRequest(Method method) {
             JSONObject json = new JSONObject(method);
-            json.remove("method");
+            json.remove("REQUEST");
             return Utils.telegramizeParameters(json);
         }
 
         private static Type deserializeResponse(JSONObject json, Type type) {
-            return new Gson().fromJson(Utils.javaizeParameters(json.getJSONObject("result")).toString(), type.getClass());
+            if (json.get("result") instanceof Boolean)
+                return io.github.shuoros.javagram.type.Boolean.builder().value(json.getBoolean("result")).build();
+            else if (json.get("result") instanceof Integer)
+                return io.github.shuoros.javagram.type.Integer.builder().value(json.getInt("result")).build();
+            else if (json.get("result") instanceof JSONArray)
+                return new Gson().fromJson(Utils.javaizeParameters(json.getJSONArray("result")).toString(), type.getClass());
+            else
+                return new Gson().fromJson(Utils.javaizeParameters(json.getJSONObject("result")).toString(), type.getClass());
         }
 
         private static JSONObject telegramizeParameters(JSONObject input) {
@@ -101,6 +108,14 @@ public class TelegramBot implements Javagram {
                     output.put(camelCaseToSnakeCase(input.getString(i)));
                 }
             }
+            return output;
+        }
+
+        private static JSONArray javaizeParameters(JSONArray input) {
+            JSONArray output = new JSONArray();
+            input.forEach(element -> {
+                output.put(javaizeParameters((JSONObject) element));
+            });
             return output;
         }
 

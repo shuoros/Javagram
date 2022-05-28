@@ -1,27 +1,22 @@
 package io.github.shuoros.javagram.method;
 
 import io.github.shuoros.javagram.type.Message;
-import io.github.shuoros.javagram.type.MessageEntity;
 import io.github.shuoros.javagram.type.ReplyMarkup;
 import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
-public class SendMessage implements Method {
+public class SendDice implements Method {
 
-    private final String REQUEST = "/sendMessage";
-    private String chatId;
-    private String text;
-    private String parseMode;
-    private List<MessageEntity> entities;
-    private boolean disableWebPagePreview;
+    private final String REQUEST = "/sendDice";
+    private int chatId;
+    private String emoji;
     private boolean disableNotification;
+    private boolean protectContent;
     private int replyToMessageId;
     private boolean allowSendingWithoutReply;
     private ReplyMarkup replyMarkup;
@@ -36,13 +31,8 @@ public class SendMessage implements Method {
         return new Message();
     }
 
-    public SendMessage(int chatId, String text) {
-        this(String.valueOf(chatId), text);
-    }
-
-    public SendMessage(String chatId, String text) {
+    public SendDice(int chatId) {
         this.chatId = chatId;
-        this.text = text;
     }
 
 }

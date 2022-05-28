@@ -1,7 +1,7 @@
 package io.github.shuoros.javagram.method;
 
-import io.github.shuoros.javagram.type.Message;
 import io.github.shuoros.javagram.type.MessageEntity;
+import io.github.shuoros.javagram.type.MessageId;
 import io.github.shuoros.javagram.type.ReplyMarkup;
 import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
@@ -13,15 +13,17 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SendMessage implements Method {
+public class CopyMessage implements Method {
 
-    private final String REQUEST = "/sendMessage";
-    private String chatId;
-    private String text;
+    private final String REQUEST = "/copyMessage";
+    private int chatId;
+    private int fromChatId;
+    private int messageId;
+    private String caption;
     private String parseMode;
-    private List<MessageEntity> entities;
-    private boolean disableWebPagePreview;
-    private boolean disableNotification;
+    private List<MessageEntity> captionEntities;
+    private Boolean disableNotification;
+    private boolean protectContent;
     private int replyToMessageId;
     private boolean allowSendingWithoutReply;
     private ReplyMarkup replyMarkup;
@@ -33,16 +35,13 @@ public class SendMessage implements Method {
 
     @Override
     public Type getReturnType() {
-        return new Message();
+        return new MessageId();
     }
 
-    public SendMessage(int chatId, String text) {
-        this(String.valueOf(chatId), text);
-    }
-
-    public SendMessage(String chatId, String text) {
+    public CopyMessage(int chatId, int fromChatId, int messageId) {
         this.chatId = chatId;
-        this.text = text;
+        this.fromChatId = fromChatId;
+        this.messageId = messageId;
     }
 
 }

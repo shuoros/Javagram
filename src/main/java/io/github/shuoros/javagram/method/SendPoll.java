@@ -13,15 +13,23 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SendMessage implements Method {
+public class SendPoll implements Method {
 
-    private final String REQUEST = "/sendMessage";
-    private String chatId;
-    private String text;
-    private String parseMode;
-    private List<MessageEntity> entities;
-    private boolean disableWebPagePreview;
+    private final String REQUEST = "/sendPoll";
+    private int chatId;
+    private String question;
+    private List<String> options;
+    private boolean isAnonymous;
+    private String type;
+    private boolean allowsMultipleAnswers;
+    private int correctOptionId;
+    private String explanation;
+    private List<MessageEntity> explanationEntities;
+    private int openPeriod;
+    private int closeDate;
+    private boolean isClosed;
     private boolean disableNotification;
+    private boolean protectContent;
     private int replyToMessageId;
     private boolean allowSendingWithoutReply;
     private ReplyMarkup replyMarkup;
@@ -36,13 +44,10 @@ public class SendMessage implements Method {
         return new Message();
     }
 
-    public SendMessage(int chatId, String text) {
-        this(String.valueOf(chatId), text);
-    }
-
-    public SendMessage(String chatId, String text) {
+    public SendPoll(int chatId, String question, List<String> options) {
         this.chatId = chatId;
-        this.text = text;
+        this.question = question;
+        this.options = options;
     }
 
 }
