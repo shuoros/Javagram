@@ -13,17 +13,15 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SendMessage implements Method {
+public class EditMessageCaption implements Method {
 
-    private final String REQUEST = "/sendMessage";
+    private final String REQUEST = "/editMessageCaption";
     private String chatId;
-    private String text;
+    private int messageId;
+    private String inlineMessageId;
+    private String caption;
     private String parseMode;
     private List<MessageEntity> entities;
-    private boolean disableWebPagePreview;
-    private boolean disableNotification;
-    private int replyToMessageId;
-    private boolean allowSendingWithoutReply;
     private ReplyMarkup replyMarkup;
 
     @Override
@@ -34,15 +32,6 @@ public class SendMessage implements Method {
     @Override
     public Type getReturnType() {
         return new Message();
-    }
-
-    public SendMessage(int chatId, String text) {
-        this(String.valueOf(chatId), text);
-    }
-
-    public SendMessage(String chatId, String text) {
-        this.chatId = chatId;
-        this.text = text;
     }
 
 }
