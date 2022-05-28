@@ -1,6 +1,6 @@
 package io.github.shuoros.javagram.method;
 
-import io.github.shuoros.javagram.type.Integer;
+import io.github.shuoros.javagram.type.Int;
 import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class GetChatMemberCount implements Method {
 
     @Override
     public Type getReturnType() {
-        return new Integer();
+        return new Int();
     }
 
 }

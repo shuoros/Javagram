@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @Getter
-public class Integer implements Type {
+public class Int implements Type {
 
     private int value;
 

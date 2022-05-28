@@ -1,6 +1,6 @@
 package io.github.shuoros.javagram.method;
 
-import io.github.shuoros.javagram.type.Boolean;
+import io.github.shuoros.javagram.type.Bool;
 import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class SetChatStickerSet implements Method {
 
     @Override
     public Type getReturnType() {
-        return new Boolean();
+        return new Bool();
     }
 
     public SetChatStickerSet(int chatId, String stickerSetName) {

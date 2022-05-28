@@ -1,6 +1,6 @@
 package io.github.shuoros.javagram.method;
 
-import io.github.shuoros.javagram.type.Boolean;
+import io.github.shuoros.javagram.type.Bool;
 import io.github.shuoros.javagram.type.BotCommand;
 import io.github.shuoros.javagram.type.BotCommandScope;
 import io.github.shuoros.javagram.type.Type;
@@ -27,7 +27,7 @@ public class SetMyCommands implements Method {
 
     @Override
     public Type getReturnType() {
-        return new Boolean();
+        return new Bool();
     }
 
     public SetMyCommands(List<BotCommand> commands) {

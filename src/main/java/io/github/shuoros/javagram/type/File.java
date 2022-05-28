@@ -13,7 +13,7 @@ public class File implements Type {
 
     private String fileId;
     private String fileUniqueId;
-    private Integer fileSize;
+    private Int fileSize;
     private String filePath;
 
 }

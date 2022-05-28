@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @Getter
-public class Boolean implements Type {
+public class Bool implements Type {
 
     private boolean value;
 

@@ -1,6 +1,6 @@
 package io.github.shuoros.javagram.method;
 
-import io.github.shuoros.javagram.type.Boolean;
+import io.github.shuoros.javagram.type.Bool;
 import io.github.shuoros.javagram.type.ChatPermissions;
 import io.github.shuoros.javagram.type.Type;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class SetChatPermissions implements Method {
 
     @Override
     public Type getReturnType() {
-        return new Boolean();
+        return new Bool();
     }
 
     public SetChatPermissions(int chatId, ChatPermissions permissions) {

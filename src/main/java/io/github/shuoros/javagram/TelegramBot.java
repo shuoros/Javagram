@@ -2,6 +2,8 @@ package io.github.shuoros.javagram;
 
 import com.google.gson.Gson;
 import io.github.shuoros.javagram.method.Method;
+import io.github.shuoros.javagram.type.Bool;
+import io.github.shuoros.javagram.type.Int;
 import io.github.shuoros.javagram.type.Type;
 import io.github.shuoros.jterminal.JTerminal;
 import io.github.shuoros.jterminal.ansi.Color;
@@ -74,9 +76,9 @@ public class TelegramBot implements Javagram {
 
         private static Type deserializeResponse(JSONObject json, Type type) {
             if (json.get("result") instanceof Boolean)
-                return io.github.shuoros.javagram.type.Boolean.builder().value(json.getBoolean("result")).build();
+                return Bool.builder().value(json.getBoolean("result")).build();
             else if (json.get("result") instanceof Integer)
-                return io.github.shuoros.javagram.type.Integer.builder().value(json.getInt("result")).build();
+                return Int.builder().value(json.getInt("result")).build();
             else if (json.get("result") instanceof JSONArray)
                 return new Gson().fromJson(Utils.javaizeParameters(json.getJSONArray("result")).toString(), type.getClass());
             else
